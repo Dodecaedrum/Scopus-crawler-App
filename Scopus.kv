@@ -1,0 +1,159 @@
+#:import RoundedRectangle kivy.graphics.RoundedRectangle
+#:import GridLayout kivy.uix.gridlayout.GridLayout
+#:import Image kivy.uix.image.Image
+#:import Button kivy.uix.button.Button
+#:import Label kivy.uix.label.Label
+#:import TextInput kivy.uix.textinput.TextInput
+<WindowManager>
+    id: wind_manager
+    FirstScreen:
+    SecondScreen:
+
+
+<RoundedLabel@Label>
+    background_color: (12.0/255, 152.0/255, 233.0/255, 1)
+    background_normal: ''
+    canvas.before:
+        Color:
+            rgba: (12.0/255, 152.0/255, 233.0/255, 1)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: 20, 20, 20, 20
+
+<RoundedInput@TextInput>
+    background_color: 1,1,1,1
+    background_normal: ''
+    cursor_color: 0,0,0,1
+    font_name: 'Raleway-MediumItalic.ttf'
+    canvas.after:
+        Color:
+            rgba: (1, 1, 1, 1)
+        Ellipse:
+            angle_start:180
+            angle_end:360
+            pos:(self.pos[0] - self.size[1]/2.0, self.pos[1])
+            size: (self.size[1], self.size[1])
+        Ellipse:
+            angle_start:360
+            angle_end:540
+            pos: (self.size[0] + self.pos[0] - self.size[1]/2.0, self.pos[1])
+            size: (self.size[1], self.size[1])
+
+<RoundedButton@Button>
+    background_color: (0,0,0,0)
+    canvas.before:
+        Color:
+            rgba: (12.0/255, 152.0/255, 233.0/255, 1) if self.state == 'normal' else (5.0/255, 63.0/255, 97.0/255, 1)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: 20, 20, 20, 20
+
+<FirstScreen>
+    uni_name: uni_name
+    years: years
+
+    BoxLayout:
+        orientation: 'vertical'
+        size: self.minimum_size
+        size_hint_y: 0.8
+        size_hint_x: 0.8
+        pos_hint: {'right': 0.9, 'top': 0.9}
+
+
+        Label:
+            text: "[font=Raleway-MediumItalic]Scopus Crawler[/font]"
+            font_name: 'Raleway-MediumItalic.ttf'
+            text_size: self.width, None
+            font_size: '50sp'
+            color: (12.0/255, 152.0/255, 233.0/255, 1)
+            size: self.texture_size
+            halign: 'center'
+            valign: 'middle'
+            markup: True
+        Label:
+            background_color: (0, 0, 0, 1)
+        Label:
+            text: "[font=Raleway-MediumItalic]ВНИМАНИЕ!!! Ознакомьтесь с README.txt[/font]"
+            font_name: 'Raleway-MediumItalic.ttf'
+            text_size: self.width, None
+            font_size: '20sp'
+            color: (1, 0, 0, 1)
+            size: self.texture_size
+            halign: 'center'
+            valign: 'middle'
+            markup: True
+        Label:
+            background_color: (0, 0, 0, 1)
+        RoundedInput:
+            id: uni_name
+            hint_text: 'Введите название ВУЗа так, как оно указано в Scopus...'
+            markup: True
+            size_hint: (1, 0.8)
+        Label:
+            background_color: (0, 0, 0, 1)
+        RoundedInput:
+            id: years
+            hint_text: 'Введите кол-во необходимых последних лет...'
+            markup: True
+            size_hint: (1, 0.8)
+        Label:
+            background_color: (0, 0, 0, 1)
+        RoundedButton:
+            id: first_file_btn
+            text: '[font=Raleway-MediumItalic]Выберите файл с API выгрузкой[/font]'
+            font_size: '20sp'
+            text_size: self.width, None
+            on_press:
+                root.manager.transition.direction = 'left'
+                root.manager.current = 'second'
+            padding_y: (10, 10)
+            size: self.texture_size
+            halign: 'center'
+            valign: 'middle'
+            markup: True
+        Label:
+            background_color: (0, 0, 0, 1)
+        RoundedButton:
+            id: btn
+            text: '[font=Raleway-MediumItalic]Начать работу[/font]'
+            font_size: '20sp'
+            text_size: self.width, None
+            on_press: root.callback()
+            padding_y: (10, 10)
+            size: self.texture_size
+            halign: 'center'
+            valign: 'middle'
+            markup: True
+
+<SecondScreen>
+
+    id: fcw_1
+
+    BoxLayout:
+        orientation: 'vertical'
+        size: self.minimum_size
+        size_hint_y: 0.8
+        size_hint_x: 0.8
+        pos_hint: {'right': 0.9, 'top': 0.9}
+
+        FileChooserIconView:
+            id: filechooser_1
+            on_selection: fcw_1.selected(filechooser_1.selection)
+            halign: 'center'
+            valign: 'middle'
+        Label:
+            background_color: (0, 0, 0, 1)
+        RoundedButton:
+            id: select_btn_1
+            text: '[font=Raleway-MediumItalic]Выбрать[/font]'
+            font_size: '20sp'
+            on_release:
+                root.manager.transition.direction = 'right'
+                root.manager.current = 'first'
+            padding_y: (10, 10)
+            size_hint: (1, 0.8)
+            halign: 'center'
+            valign: 'middle'
+            markup: True
