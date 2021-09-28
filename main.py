@@ -32,9 +32,9 @@ options.add_argument("--window-size=1920,1080")
 
 port = 465
 smtp_server = "smtp.gmail.com"
-sender_email = "shalombitrix@gmail.com"
-receivers = ["lomrem@gmail.com", "datcancer@gmail.com"]
-password = '123Shalom876'
+sender_email = # add sender email here
+receivers = # add list of recievers here
+password = # add string apssword here
 
 body = """\
 This is automated message, containing Scopus data."""
